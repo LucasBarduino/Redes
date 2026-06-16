@@ -2,6 +2,8 @@ package cliente;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.Socket;
 
@@ -40,8 +42,9 @@ public class QuizClientGUI {
                     BorderLayout.NORTH);
 
             janela.setSize(600, 400);
+
             janela.setDefaultCloseOperation(
-                    JFrame.EXIT_ON_CLOSE);
+                    JFrame.DO_NOTHING_ON_CLOSE);
 
             janela.setVisible(true);
 
@@ -55,6 +58,14 @@ public class QuizClientGUI {
 
                 Socket socket =
                         new Socket(ipServidor, 5000);
+
+                janela.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        try { socket.close(); } catch (Exception ex) { }
+                        System.exit(0);
+                    }
+                });
 
                 BufferedReader entrada =
                         new BufferedReader(

@@ -27,7 +27,8 @@ public class UDPClient {
                 new DatagramPacket(
                         buffer,
                         buffer.length);
-
+                        
+        socket.setSoTimeout(3000);
         socket.receive(resposta);
 
         System.out.println(
